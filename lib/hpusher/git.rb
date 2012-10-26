@@ -1,4 +1,4 @@
-module P2k
+module Hpusher
   class Git
     def current_branch
       result = %x{git branch}.split("\n")

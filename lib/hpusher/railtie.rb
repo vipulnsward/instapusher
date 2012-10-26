@@ -1,4 +1,4 @@
-module P2k
+module Hpusher
   class Engine < Rails::Engine
 
     rake_tasks do
@@ -9,7 +9,7 @@ module P2k
       HPUSHER_URL = 'http://74.207.237.77/heroku'
 
       desc "pushes to heroku"
-      task :push2heroku do
+      task :hpusher do
         branch_name = Git.new.current_branch
         project_name = File.basename(Dir.getwd)
 

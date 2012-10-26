@@ -1,4 +1,4 @@
-module P2k
+module Hpusher
   class ConfigLoader
 
     attr_reader :filename, :hash
@@ -23,8 +23,8 @@ module P2k
 
     def load_config
       unless File.exists? filename
-        puts "you do not have config/push2heroku.yml file. Please execute "
-        puts "rails generate push2heroku:install"
+        puts "you do not have config/hpusher.yml file. Please execute "
+        puts "rails generate hpusher:install"
         abort
       end
       YAML.load(ERB.new(File.read(filename)).result)

@@ -1,7 +1,7 @@
-require "p2k/version"
+require "hpusher/version"
 require "hashr"
 
-module P2k
+module Hpusher
   extend ActiveSupport::Autoload
 
   autoload :Base
@@ -10,4 +10,4 @@ module P2k
   autoload :Util
 end
 
-require 'p2k/railtie'
+require 'hpusher/railtie'

@@ -1,6 +1,6 @@
 require "open3"
 
-module P2k
+module Hpusher
   class Base
 
     attr_accessor :branch_name, :commands, :current_user, :settings, :named_branches, :job
@@ -11,7 +11,7 @@ module P2k
       @callbacks = callbacks
       @git = Git.new
       @commands = []
-      @config_file = File.join(config_path, 'push2heroku.yml')
+      @config_file = File.join(config_path, 'hpusher.yml')
       @config = ConfigLoader.new(@config_file)
       @project_name = @job.project_name
       @branch_name = @job.branch_name

@@ -1,3 +1,3 @@
-module P2k
+module Hpusher
   VERSION = "0.0.1"
 end
