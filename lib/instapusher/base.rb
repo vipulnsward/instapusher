@@ -1,6 +1,6 @@
 require "open3"
 
-module Hpusher
+module Instapusher
   class Base
 
     attr_accessor :branch_name, :commands, :current_user, :settings, :named_branches, :job

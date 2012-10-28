@@ -1,4 +1,4 @@
-module Hpusher
+module Instapusher
   class Engine < Rails::Engine
 
     rake_tasks do
@@ -9,7 +9,7 @@ module Hpusher
       HPUSHER_URL = 'http://74.207.237.77/heroku'
 
       desc "pushes to heroku"
-      task :hpusher do
+      task :push2heroku do
         branch_name = Git.new.current_branch
         project_name = File.basename(Dir.getwd)
 

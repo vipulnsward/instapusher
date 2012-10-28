@@ -1,7 +1,7 @@
-require "hpusher/version"
+require "instapusher/version"
 require "hashr"
 
-module Hpusher
+module Instapusher
   extend ActiveSupport::Autoload
 
   autoload :Base
@@ -10,4 +10,4 @@ module Hpusher
   autoload :Util
 end
 
-require 'hpusher/railtie'
+require 'instapusher/railtie'

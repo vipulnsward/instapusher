@@ -1,4 +1,4 @@
-module Hpusher
+module Instapusher
   class ConfigLoader
 
     attr_reader :filename, :hash

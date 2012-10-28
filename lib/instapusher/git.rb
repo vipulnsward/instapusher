@@ -1,4 +1,4 @@
-module Hpusher
+module Instapusher
   class Git
     def current_branch
       result = %x{git branch}.split("\n")

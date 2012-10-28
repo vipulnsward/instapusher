@@ -1,4 +1,4 @@
-# Push2heroku
+# Instapusher
 
 Makes it easy to push to heroku.
 
@@ -6,13 +6,15 @@ Makes it easy to push to heroku.
 
 Add this to Gemfile:
 
-    gem 'push2heroku'
+    gem 'instapusher'
 
 ## Usage
 
-After installing the gem copy [this file](https://raw.github.com/gist/3098161/578dad8cd3933834712a8afdf33520221dbdb986/push2heroku.yml) to `config/push2heroku.yml` .
+    rake push2heroku
 
-Change the contents of `config/push2heroku.yml` as per your needs after
+After installing the gem copy [this file](https://raw.github.com/gist/3098161/578dad8cd3933834712a8afdf33520221dbdb986/push2heroku.yml) to `config/instapusher.yml` .
+
+Change the contents of `config/instapusher.yml` as per your needs after
 reading rest of README.
 
 ## What problem it solves
@@ -79,5 +81,5 @@ Just comma separate all the tasks. It's that simple. Now `push2heroku` gives all
 
 ## License
 
-`push2heroku` is released under MIT License.
+`instapusher` is released under MIT License.
 
