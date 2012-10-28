@@ -6,14 +6,24 @@ module Instapusher
       require 'uri'
       require 'multi_json'
 
-      HPUSHER_URL = 'http://74.207.237.77/heroku'
 
       desc "pushes to heroku"
       task :push2heroku do
+
+        if ENV['LOCAL']
+          URL = 'http://localhost:3000/heroku'
+        else
+          URL = 'http://74.207.237.77/heroku'
+        end
+
         branch_name = Git.new.current_branch
         project_name = File.basename(Dir.getwd)
 
-        response = Net::HTTP.post_form(URI.parse(HPUSHER_URL), { project: project_name, branch: branch_name, 'options[callbacks]' => ENV['CALLBACKS']})
+        puts "project: #{project_name}"
+        puts "branch: #{branch_name}"
+        puts "URL: #{URL}"
+
+        response = Net::HTTP.post_form(URI.parse(URL), { project: project_name, branch: branch_name, 'options[callbacks]' => ENV['CALLBACKS']})
 
         if response.code == '200'
           tmp = MultiJson.load(response.body)
