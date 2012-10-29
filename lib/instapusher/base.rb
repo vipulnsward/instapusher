@@ -75,7 +75,13 @@ module Instapusher
     end
 
     def set_heroku_app_name
-      @heroku_app_name = "#{url_prefix}-#{url_suffix}".downcase.chomp('-')[0..29] #heroku only allows upto 30 characters in name
+      array = [sanitized_project_name, sanitized_branch_name]
+      unless named_branches.include?(branch_name)
+        array << sanitized_user_name
+      end
+
+      #heroku only allows upto 30 characters in name
+      @heroku_app_name = array.join('-').gsub(/[^0-9a-zA-Z]+/,'-').downcase.chomp('-')[0..29]
     end
 
     def reload_config
@@ -83,15 +89,15 @@ module Instapusher
       set_settings
     end
 
-    def url_suffix
-      return branch_name if named_branches.include?(branch_name)
-
-      u = current_user || 'hpusher'
-
-      [branch_name[0..10], u[0..5]].join('-').gsub(/[^0-9a-zA-Z]+/,'-').downcase
+    def sanitized_branch_name
+      branch_name
     end
 
-    def url_prefix
+    def sanitized_user_name
+      current_user || 'ip'
+    end
+
+    def sanitized_project_name
       project_name.gsub(/[^0-9a-zA-Z]+/,'-').downcase
     end
 
