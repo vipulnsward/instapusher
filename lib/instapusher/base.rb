@@ -75,7 +75,7 @@ module Instapusher
     end
 
     def set_heroku_app_name
-      array = [sanitized_project_name, sanitized_branch_name]
+      array = [sanitized_project_name, branch_name]
       unless named_branches.include?(branch_name)
         array << sanitized_user_name
       end
@@ -87,10 +87,6 @@ module Instapusher
     def reload_config
       @config = ConfigLoader.new(config_file)
       set_settings
-    end
-
-    def sanitized_branch_name
-      branch_name
     end
 
     def sanitized_user_name
@@ -155,11 +151,15 @@ module Instapusher
       puts '='*50
       puts ''
       puts '='*50
-      puts 'Following commands will be executed:'
+      msg = 'Following commands will be executed:'
+      puts msg = 'Following commands will be executed:'
+      job.add_log msg
+      job.add_log "*"*40
       commands.each do |cmd|
         puts cmd
         job.add_log(cmd)
       end
+      job.add_log "*"*40
       puts '='*50
       puts ''
     end
