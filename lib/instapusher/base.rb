@@ -11,7 +11,7 @@ module Instapusher
       @callbacks = callbacks
       @git = Git.new
       @commands = []
-      @config_file = File.join(config_path, 'hpusher.yml')
+      @config_file = File.join(config_path, 'push2heroku.yml')
       @config = ConfigLoader.new(@config_file)
       @project_name = @job.project_name
       @branch_name = @job.branch_name

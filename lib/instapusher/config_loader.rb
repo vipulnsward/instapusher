@@ -23,8 +23,7 @@ module Instapusher
 
     def load_config
       unless File.exists? filename
-        puts "you do not have config/hpusher.yml file. Please execute "
-        puts "rails generate hpusher:install"
+        Rails.logger.info "you do not have config/#{filename} file. "
         abort
       end
       YAML.load(ERB.new(File.read(filename)).result)
