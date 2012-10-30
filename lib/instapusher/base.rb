@@ -32,9 +32,11 @@ module Instapusher
             cmd = "git remote add  h#{branch_name} git@heroku.com:#{heroku_app_name}.git"
             job.add_log(cmd)
             unless system(cmd)
+              job.update_attributes(ended_at: Time.now, status: :failed)
               raise "command #{cmd} failed"
             end
           elsif !exit_status.success? && index >0
+            job.update_attributes(ended_at: Time.now, status: :failed)
             msg = "command #{cmd} failed"
             job.add_log(msg)
             raise msg
