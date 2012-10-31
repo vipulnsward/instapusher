@@ -19,9 +19,9 @@ module Instapusher
         branch_name = Git.new.current_branch
         project_name = File.basename(Dir.getwd)
 
-        puts "project: #{project_name}"
-        puts "branch: #{branch_name}"
-        puts "URL: #{URL}"
+        #puts "project: #{project_name}"
+        #puts "branch: #{branch_name}"
+        #puts "URL: #{URL}"
 
         response = Net::HTTP.post_form(URI.parse(URL), { project: project_name, branch: branch_name, 'options[callbacks]' => ENV['CALLBACKS']})
 
