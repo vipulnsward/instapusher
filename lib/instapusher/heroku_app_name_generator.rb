@@ -11,7 +11,7 @@ module Instapusher
     # heroku only allows upto 30 characters in name
     def name
       array = [sanitized_project_name, sanitized_branch_name]
-      name = sanitized_app_name(array)
+      name = sanitize_app_name(array)
 
       if %w(production staging).include?(branch_name)
         name[0..29]
