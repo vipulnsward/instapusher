@@ -35,7 +35,7 @@ module Instapusher
               job.update_attributes(ended_at: Time.now, status: :failed)
               raise "command #{cmd} failed"
             end
-          elsif !exit_status.success? && index >0
+          elsif !exit_status.success? && index > 0
             job.update_attributes(ended_at: Time.now, status: :failed)
             msg = "command #{cmd} failed"
             job.add_log(msg)
@@ -77,13 +77,7 @@ module Instapusher
     end
 
     def set_heroku_app_name
-      array = [sanitized_project_name, branch_name]
-      unless named_branches.include?(branch_name)
-        array << sanitized_user_name
-      end
-
-      #heroku only allows upto 30 characters in name
-      @heroku_app_name = array.join('-').gsub(/[^0-9a-zA-Z]+/,'-').downcase.chomp('-')[0..29]
+      @heroku_app_name =  HerokuAppNameGenerator.new( project_name, branch_name).name
     end
 
     def reload_config
@@ -93,10 +87,6 @@ module Instapusher
 
     def sanitized_user_name
       current_user || 'ip'
-    end
-
-    def sanitized_project_name
-      project_name.gsub(/[^0-9a-zA-Z]+/,'-').downcase
     end
 
     def build_commands

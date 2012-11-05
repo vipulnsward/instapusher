@@ -23,7 +23,10 @@ module Instapusher
         #puts "branch: #{branch_name}"
         #puts "URL: #{URL}"
 
-        response = Net::HTTP.post_form(URI.parse(URL), { project: project_name, branch: branch_name, 'options[callbacks]' => ENV['CALLBACKS']})
+        response = Net::HTTP.post_form(URI.parse(URL), { project: project_name,
+                                                         branch: branch_name,
+                                                         local: ENV['LOCAL'],
+                                                         'options[callbacks]' => ENV['CALLBACKS']})
 
         if response.code == '200'
           tmp = MultiJson.load(response.body)
