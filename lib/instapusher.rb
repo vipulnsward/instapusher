@@ -8,6 +8,7 @@ module Instapusher
   autoload :ConfigLoader
   autoload :Git
   autoload :Util
+  autoload :HerokuAppNameGenerator
 end
 
 require 'instapusher/railtie'
