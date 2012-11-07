@@ -31,17 +31,19 @@ module Instapusher
           exit_status = wait_thr.value
 
           job.add_log("exist_status.success? is: #{exit_status.success?}")
+          job.add_log("index is: #{index}")
 
-          if !exit_status.success? && index == 0
+          if !exit_status.success? && index == 1
             cmd = "git remote add  h#{branch_name} git@heroku.com:#{heroku_app_name}.git"
             job.add_log(cmd)
             unless system(cmd)
               job.update_attributes(ended_at: Time.now, status: :failed)
-              raise "command #{cmd} failed"
+              raise "#{cmd} FAILED"
+              job.add_log(msg)
             end
-          elsif !exit_status.success? && index > 0
+          elsif !exit_status.success? && index != 0
             job.update_attributes(ended_at: Time.now, status: :failed)
-            msg = "command #{cmd} failed"
+            msg = "#{cmd} FAILED"
             job.add_log(msg)
             raise msg
           end
@@ -143,7 +145,7 @@ module Instapusher
     def feedback_to_user
       job.add_log 'Following commands will be executed:'
       commands.each do |cmd|
-        job.add_log(' '*10 + cmd)
+        job.add_log(' '*4 + cmd)
       end
     end
   end
