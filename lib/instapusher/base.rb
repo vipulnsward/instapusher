@@ -24,6 +24,9 @@ module Instapusher
       commands.each_with_index do |cmd, index|
         job.add_log("executing: #{cmd}")
         Open3.popen3(cmd) do |stdin, stdout, stderr, wait_thr|
+          while line = stdout.gets
+            job.add_log(line)
+          end
           while line = stderr.gets
             job.add_log(line)
           end
