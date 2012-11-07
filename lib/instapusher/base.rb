@@ -141,13 +141,10 @@ module Instapusher
     end
 
     def feedback_to_user
-      job.add_log '='*50
       job.add_log 'Following commands will be executed:'
-      job.add_log "*"*50
       commands.each do |cmd|
-        job.add_log(cmd)
+        job.add_log(' '*10 + cmd)
       end
-      job.add_log "*"*40
     end
   end
 end
