@@ -139,23 +139,13 @@ module Instapusher
     end
 
     def feedback_to_user
-      puts '='*50
-      puts 'The application will be deployed at:'
-      puts "http://#{heroku_app_name}.herokuapp.com"
-      puts '='*50
-      puts ''
-      puts '='*50
-      msg = 'Following commands will be executed:'
-      puts msg = 'Following commands will be executed:'
-      job.add_log msg
-      job.add_log "*"*40
+      job.add_log '='*50
+      job.add_log 'Following commands will be executed:'
+      job.add_log "*"*50
       commands.each do |cmd|
-        puts cmd
         job.add_log(cmd)
       end
       job.add_log "*"*40
-      puts '='*50
-      puts ''
     end
   end
 end
