@@ -30,6 +30,8 @@ module Instapusher
 
           exit_status = wait_thr.value
 
+          job.add_log("exist_status.success? is: #{exit_status.success?}")
+
           if !exit_status.success? && index == 0
             cmd = "git remote add  h#{branch_name} git@heroku.com:#{heroku_app_name}.git"
             job.add_log(cmd)
