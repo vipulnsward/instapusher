@@ -22,10 +22,12 @@ module Instapusher
       build_commands
       feedback_to_user
       commands.each_with_index do |cmd, index|
-        job.add_log("executing: #{cmd} index is #{index}")
+        job.add_log("executing: #{cmd}")
         Open3.popen3(cmd) do |stdin, stdout, stderr, wait_thr|
-          job.add_log(stdout.read)
-          job.add_log(stderr.read)
+          while line = stderr.gets
+            job.add_log(line)
+          end
+
           exit_status = wait_thr.value
 
           if !exit_status.success? && index == 0
