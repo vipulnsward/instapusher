@@ -13,15 +13,11 @@ module Instapusher
         if ENV['LOCAL']
           URL = 'http://localhost:3000/heroku'
         else
-          URL = 'http://74.207.237.77/heroku'
+          URL = 'http://instapusher.com/heroku'
         end
 
         branch_name = Git.new.current_branch
         project_name = File.basename(Dir.getwd)
-
-        #puts "project: #{project_name}"
-        #puts "branch: #{branch_name}"
-        #puts "URL: #{URL}"
 
         response = Net::HTTP.post_form(URI.parse(URL), { project: project_name,
                                                          branch: branch_name,
