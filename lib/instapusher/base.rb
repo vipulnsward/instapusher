@@ -12,7 +12,7 @@ module Instapusher
 
       @git = Git.new
       @commands = []
-      @config_file = File.join(config_path, 'push2heroku.yml')
+      @config_file = File.join(config_path, 'instapusher.yml')
       @config = ConfigLoader.new(@config_file)
       @project_name = @job.project_name
       @branch_name = @job.branch_name

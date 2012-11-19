@@ -10,9 +10,9 @@ Add this to Gemfile:
 
 ## Usage
 
-    rake push2heroku
+    rake instapusher
 
-After installing the gem copy [this file](https://raw.github.com/gist/3098161/578dad8cd3933834712a8afdf33520221dbdb986/push2heroku.yml) to `config/instapusher.yml` .
+After installing the gem copy [this file](https://raw.github.com/gist/3098161/578dad8cd3933834712a8afdf33520221dbdb986/instapusher.yml) to `config/instapusher.yml` .
 
 Change the contents of `config/instapusher.yml` as per your needs after
 reading rest of README.

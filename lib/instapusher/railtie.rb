@@ -8,7 +8,7 @@ module Instapusher
 
 
       desc "pushes to heroku"
-      task :push2heroku do
+      task :instapusher do
 
         if ENV['LOCAL']
           URL = 'http://localhost:3000/heroku'
