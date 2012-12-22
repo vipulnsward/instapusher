@@ -24,14 +24,12 @@ module Instapusher
                                                          local: ENV['LOCAL'],
                                                          'options[callbacks]' => ENV['CALLBACKS']})
 
-        status_url = tmp['status']
-        if ENV['LOCAL']
-          status_url = status_url.gsub('instapusher.com','localhost:3000')
-        end
         if response.code == '200'
           tmp = MultiJson.load(response.body)
+          status_url = tmp['status']
+          status_url = status_url.gsub('instapusher.com','localhost:3000') if ENV['LOCAL']
           puts 'The appliction will be deployed to: ' +  tmp['heroku_url']
-          puts 'Monitor the job status at: ' +  tmp['status']
+          puts 'Monitor the job status at: ' +  status_url
         else
           puts 'Something has gone wrong'
         end
