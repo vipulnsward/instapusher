@@ -30,6 +30,8 @@ module Instapusher
           status_url = status_url.gsub('instapusher.com','localhost:3000') if ENV['LOCAL']
           puts 'The appliction will be deployed to: ' +  tmp['heroku_url']
           puts 'Monitor the job status at: ' +  status_url
+          cmd = "open #{status_url}"
+          `#{cmd}`
         else
           puts 'Something has gone wrong'
         end
