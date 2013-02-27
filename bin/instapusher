@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 
-require 'instapusher'
 require 'instapusher/commands'
 
 Instapusher::Commands.deploy
