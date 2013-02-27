@@ -12,5 +12,9 @@ module Instapusher
     def current_user
       `git config user.name`.chop!
     end
+
+    def project_name
+      `git config remote.origin.url`.chop!.scan(/\/([^\/]+).git$/).flatten.first
+    end
   end
 end

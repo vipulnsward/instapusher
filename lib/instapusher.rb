@@ -1,4 +1,4 @@
-require "instapusher/version"
+require "active_support"
 
 module Instapusher
   extend ActiveSupport::Autoload
