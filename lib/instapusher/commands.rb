@@ -4,27 +4,36 @@ require 'multi_json'
 
 module Instapusher
   class Commands
+    DEFAULT_HOSTNAME = 'instapusher.com'
+
     def self.deploy
+
+      hostname = ENV['INSTAPUSHER_HOST'] || DEFAULT_HOSTNAME
+
+      #TODO: Remove this env and use host instead of duplication
       if ENV['LOCAL']
-        URL = 'http://localhost:3000/heroku'
-      else
-        URL = 'http://instapusher.com/heroku'
+        hostname = "localhost:3000"
       end
+      url = "http://#{hostname}/heroku"
 
-      branch_name = Git.new.current_branch
-      project_name = File.basename(Dir.getwd)
 
-      response = Net::HTTP.post_form(URI.parse(URL), { project: project_name,
-                                                       branch: branch_name,
-                                                       local: ENV['LOCAL'],
-                                                       'options[callbacks]' => ENV['CALLBACKS']})
+      git = Git.new
+      branch_name  = git.current_branch
+      project_name = git.project_name
+
+      response = Net::HTTP.post_form(URI.parse(url),
+                                     { project:             project_name,
+                                       branch:              branch_name,
+                                       local:               ENV['LOCAL'],
+                                       'options[callbacks]' => ENV['CALLBACKS'] })
 
       if response.code == '200'
-        tmp = MultiJson.load(response.body)
-        status_url = tmp['status']
-        status_url = status_url.gsub('instapusher.com','localhost:3000') if ENV['LOCAL']
-        puts 'The appliction will be deployed to: ' +  tmp['heroku_url']
-        puts 'Monitor the job status at: ' +  status_url
+        response_body = MultiJson.load(response.body)
+        status_url    = response_body['status']
+
+        status_url = status_url.gsub(DEFAULT_HOSTNAME, hostname) if ENV['LOCAL']
+        puts 'The appliction will be deployed to: ' + response_body['heroku_url']
+        puts 'Monitor the job status at: ' + status_url
         cmd = "open #{status_url}"
         `#{cmd}`
       else

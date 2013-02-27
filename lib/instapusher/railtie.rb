@@ -1,3 +1,5 @@
+require 'rails/engine'
+
 module Instapusher
   class Engine < Rails::Engine
 
