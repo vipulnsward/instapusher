@@ -1,3 +1,5 @@
 #!/usr/bin/env ruby
 
+require 'instapusher'
+#require 'instapusher/commands'
 puts 1

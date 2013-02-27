@@ -1,6 +1,7 @@
 require 'net/http'
 require 'uri'
 require 'multi_json'
+require 'instapusher'
 
 module Instapusher
   class Commands
