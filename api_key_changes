@@ -1,0 +1,59 @@
+diff --git a/lib/instapusher/commands.rb b/lib/instapusher/commands.rb
+index d7fc8f0..f907f23 100644
+--- a/lib/instapusher/commands.rb
++++ b/lib/instapusher/commands.rb
+@@ -17,32 +17,40 @@ module Instapusher
+       end
+       url = "http://#{hostname}/heroku"
+ 
+-
+       git = Git.new
+       branch_name  = git.current_branch
+       project_name = git.project_name
+-
+-      api_key = 'read api key from ~/.instapusher'
+-
++    
++      if File.exists?(File.join(Dir.home, ".instapusher")) 
++        api_key = File.open(File.join(Dir.home, '.instapusher'), &:readline)
++      else
++        puts "Missing instapusher api_key" 
++        return
++      end
++      
+       options = { project:             project_name,
+                   branch:              branch_name,
+                   local:               ENV['LOCAL'],
+                   api_key:             api_key }
+ 
+       response = Net::HTTP.post_form URI.parse(url), options
+-
+       response_body = MultiJson.load(response.body)
+-      job_status_url    = response_body['job_status_url']
+-
+-      if job_status_url.present?
+-        job_status_url = job_status_url.gsub(DEFAULT_HOSTNAME, hostname) if ENV['LOCAL']
+-        puts 'The appliction will be deployed to: ' + response_body['heroku_url']
+-        puts 'Monitor the job status at: ' + job_status_url
+-        cmd = "open #{job_status_url}"
+-        `#{cmd}`
++
++      if response_body['error']
++        puts "#{response_body['error']}"
+       else
+-        puts response_body['error_message']
++        show_job_status(response_body)
+       end
+     end
++
++    def self.show_job_status(response_body)
++      job_status_url = response_body['job_status_url']
++
++      job_status_url = job_status_url.gsub(DEFAULT_HOSTNAME, hostname) if ENV['LOCAL']
++      puts 'The appliction will be deployed to: ' + response_body['heroku_url']
++      puts 'Monitor the job status at: ' + job_status_url
++      cmd = "open #{job_status_url}"
++      `#{cmd}`
++    end
+   end
+ end
