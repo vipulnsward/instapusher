@@ -22,23 +22,26 @@ module Instapusher
       branch_name  = git.current_branch
       project_name = git.project_name
 
-      response = Net::HTTP.post_form(URI.parse(url),
-                                     { project:             project_name,
-                                       branch:              branch_name,
-                                       local:               ENV['LOCAL'],
-                                       'options[callbacks]' => ENV['CALLBACKS'] })
+      api_key = 'read api key from ~/.instapusher'
 
-      if response.code == '200'
-        response_body = MultiJson.load(response.body)
-        status_url    = response_body['status']
+      options = { project:             project_name,
+                  branch:              branch_name,
+                  local:               ENV['LOCAL'],
+                  api_key:             api_key }
 
-        status_url = status_url.gsub(DEFAULT_HOSTNAME, hostname) if ENV['LOCAL']
+      response = Net::HTTP.post_form URI.parse(url), options
+
+      response_body = MultiJson.load(response.body)
+      job_status_url    = response_body['job_status_url']
+
+      if job_status_url.present?
+        job_status_url = job_status_url.gsub(DEFAULT_HOSTNAME, hostname) if ENV['LOCAL']
         puts 'The appliction will be deployed to: ' + response_body['heroku_url']
-        puts 'Monitor the job status at: ' + status_url
-        cmd = "open #{status_url}"
+        puts 'Monitor the job status at: ' + job_status_url
+        cmd = "open #{job_status_url}"
         `#{cmd}`
       else
-        puts 'Something has gone wrong'
+        puts response_body['error_message']
       end
     end
   end
