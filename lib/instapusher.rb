@@ -1,8 +1,7 @@
-require "active_support"
+require 'instapusher/git'
+require 'instapusher/configuration'
 
 module Instapusher
-  extend ActiveSupport::Autoload
-  autoload :Git
 end
 
-require 'instapusher/railtie'
+Instapusher::Configuration.load

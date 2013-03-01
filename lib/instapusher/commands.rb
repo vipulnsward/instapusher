@@ -22,7 +22,7 @@ module Instapusher
       branch_name  = git.current_branch
       project_name = git.project_name
 
-      api_key = 'read api key from ~/.instapusher'
+      api_key = Instapusher::Configuration.api_key || ""
 
       options = { project:             project_name,
                   branch:              branch_name,
@@ -32,9 +32,9 @@ module Instapusher
       response = Net::HTTP.post_form URI.parse(url), options
 
       response_body = MultiJson.load(response.body)
-      job_status_url    = response_body['job_status_url']
+      job_status_url    = response_body['status']
 
-      if job_status_url.present?
+      if job_status_url && job_status_url != ""
         job_status_url = job_status_url.gsub(DEFAULT_HOSTNAME, hostname) if ENV['LOCAL']
         puts 'The appliction will be deployed to: ' + response_body['heroku_url']
         puts 'Monitor the job status at: ' + job_status_url
