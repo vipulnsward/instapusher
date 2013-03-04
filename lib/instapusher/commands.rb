@@ -23,7 +23,7 @@ module Instapusher
       project_name = git.project_name
 
       api_key = Instapusher::Configuration.api_key || ""
-      if api_key.length == 0
+      if api_key.to_s.length == 0
         puts "Please enter instapusher api_key at ~/.instapusher "
       end
 
