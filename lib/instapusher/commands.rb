@@ -24,7 +24,7 @@ module Instapusher
 
       api_key = Instapusher::Configuration.api_key || ""
       if api_key.empty?
-        puts "Missing instapusher api_key"
+        puts "Please enter instapusher api_key at ~/.instapusher "
       end
 
       options = { project:             project_name,
