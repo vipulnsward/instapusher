@@ -23,6 +23,10 @@ module Instapusher
       project_name = git.project_name
 
       api_key = Instapusher::Configuration.api_key || ""
+      if api_key.empty?
+        puts "Missing instapusher api_key"
+        return
+      end
 
       options = { project:             project_name,
                   branch:              branch_name,
@@ -41,7 +45,7 @@ module Instapusher
         cmd = "open #{job_status_url}"
         `#{cmd}`
       else
-        puts response_body['error_message']
+        puts response_body['error']
       end
     end
   end
