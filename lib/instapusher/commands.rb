@@ -10,6 +10,7 @@ module Instapusher
     def self.deploy(project_name=nil, branch_name=nil)
 
       hostname = ENV['INSTAPUSHER_HOST'] || DEFAULT_HOSTNAME
+      hostname = "localhost:3000" if ENV['LOCAL']
 
       url          = "http://#{hostname}/heroku.json"
       git          = Git.new
