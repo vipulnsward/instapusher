@@ -24,6 +24,7 @@ module Instapusher
 
       options = { project: project_name,
                   branch:  branch_name,
+                  local:   ENV['LOCAL'],
                   api_key: api_key }
 
       response = Net::HTTP.post_form URI.parse(url), options
