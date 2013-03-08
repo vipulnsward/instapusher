@@ -35,7 +35,6 @@ module Instapusher
       job_status_url    = response_body['status'] || response_body['job_status_url']
 
       if job_status_url && job_status_url != ""
-        job_status_url = job_status_url.gsub(DEFAULT_HOSTNAME, hostname) if ENV['LOCAL']
         puts 'The appliction will be deployed to: ' + response_body['heroku_url']
         puts 'Monitor the job status at: ' + job_status_url
         cmd = "open #{job_status_url}"
