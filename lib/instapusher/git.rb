@@ -14,7 +14,9 @@ module Instapusher
     end
 
     def project_name
-      `git config remote.origin.url`.chop!.scan(/\/([^\/]+).git$/).flatten.first
+      result = `git config remote.origin.url`.chop!.scan(/\/([^\/]+)?$/).flatten.first
+      result.sub!(/\.git$/, '') if result
+      result
     end
   end
 end
