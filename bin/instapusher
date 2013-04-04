@@ -2,4 +2,4 @@
 
 require 'instapusher/commands'
 
-Instapusher::Commands.deploy
+Instapusher::Commands.deploy *ARGV[0..1]
