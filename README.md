@@ -4,18 +4,16 @@ Makes it easy to push to heroku.
 
 ## Installation
 
-Add this to Gemfile:
-
-    gem 'instapusher'
+    gem install instapusher
 
 ## Usage
 
-    rake instapusher
+    instapusher
 
-After installing the gem copy [this file](https://raw.github.com/gist/3098161/578dad8cd3933834712a8afdf33520221dbdb986/instapusher.yml) to `config/instapusher.yml` .
+It detects a project name and a branch from the git repo. Else you can specify it from the command line like:
 
-Change the contents of `config/instapusher.yml` as per your needs after
-reading rest of README.
+    instapusher rails master
+
 
 ## What problem it solves
 
