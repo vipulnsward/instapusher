@@ -15,6 +15,28 @@ It detects a project name and a branch from the git repo. Else you can specify i
     instapusher rails master
 
 
+After installing the gem you should register in the `http://instapusher.com`.
+Setup a project using the user and project name from the github. And create a config file `.instapusher` with api key.
+Example:
+
+    api_key: 123123123
+
+## Setup Instapusher server
+
+You can provide the env variable `LOCAL` like:
+
+    LOCAL=1 instapusher
+
+And instapusher will send requests to `http://localhost:3000` server.
+Another solution is use env variable `INSTAPUSHER_HOST`.
+
+    INSTAPUSHER_HOST=instapusher.com instapusher
+
+Also there are other env variables like `INSTAPUSHER_PROJECT` and `INSTAPUSHER_BRANCH`.
+
+    INSTAPUSHER_HOST=instapusher.com INSTAPUSHER_PROJECT=rails INSTAPUSHER_BRANCH=master instapusher
+
+
 ## What problem it solves
 
 Here at BigBinary we create a separate branch for each feature we work
@@ -24,60 +46,31 @@ members to review. However in order to review the work all the team
 members need to pull down the branch and fire up `rails server` and then
 review.
 
-We like to see things working. So we developed `push2heroku` to push a
+We like to see things working. So we developed `instapusher` to push a
 feature branch to heroku instantly with one command. Executing
-`push2heroku` prints a url and we put that url in the pull request so
+`instapusher` prints a url and we put that url in the pull request so
 that team members can actually test the feature.
 
 ## Here is how it works
 
-`push2heroku` reads the `push2heroku.yml` and executes those commands.
-It's that simple.
-
-Lets say that I am working in a branch called
-`76-facebook-authentication`. When I execute `push2heroku` then the
+Lets say that I am working with github project `nimbleshop` in a branch called
+`76-facebook-authentication`. When I execute `instapusher` then the
 application name under which it will be deployed to heroku will be
-`nimbleshop-76-facebook-neeraj`.
+`nimbleshop-76-facebook-ip`.
 
 `nimbleshop` is the name of the project.
 `76-facebook` is the first 10 letters of the branch name.
-`neeraj` is the first 5 letters of my github user name.
+`ip` is characters to mark the instance as temporal.
 
 So in this case the url of the application will be
-`http://nimbleshop-76-facebook-neeraj.herokuapp.com` .
+`http://nnimbleshop-76-facebook-ip.herokuapp.com` .
 
-In the `push2heroku.yml` file the keys `production` and `staging`
-are branch names. And these branches are special branches. For these
-branches the url generated will be just the application name and the
-branch name. For example if I execute `rake push2heroku` from `staging`
+There are two special branches `production` and `staging`.
+For these branches the url generated will be just the application name and the
+branch name. For example if I execute `instapusher` from `staging`
 branch then the heroku url will be
 `http://nimbleshop-staging.herokuapp.com`.
-
-However if I delete `staging` key from `push2heroku.yml` then `staging`
-is no longer a special branch and the heroku url would be
-`http://nimbleshop-staging-neeraj.herokuapp.com` .
-
-## Callbacks
-
-The new design of `push2heroku` is very flexible. Let's say that Artem
-wants to test something then he can add to `push2heroku.yml` something
-like this
-
-```
-regenerate_images:
-  - bundle exec heroku run rake db:regenerate_images --app <%=ENV['HEROKU_APP_NAME']%> --trace
-  - bundle exec heroku run rake db:post_image_cleanup --app <%=ENV['HEROKU_APP_NAME']%> --trace
-```
-
-Now to execute all the commands under key `regenrate_images` all he has to do is
-
-```
-rake push2heroku CALLBACKS=reset_db_using_fixtures,regenerate_images
-```
-
-Just comma separate all the tasks. It's that simple. Now `push2heroku` gives all the control to the developer.
 
 ## License
 
 `instapusher` is released under MIT License.
-
