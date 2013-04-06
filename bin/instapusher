@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'instapusher/commands'
+require 'instapusher/version'
 
 if ['-v', '--version'].include? ARGV[0]
   puts Instapusher::VERSION
