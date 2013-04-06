@@ -31,8 +31,7 @@ To enable debug messages you can do
 
     DEBUG=1 instapusher
 
-And instapusher will send requests to `http://localhost:3000` server.
-Another solution is use env variable `INSTAPUSHER_HOST`.
+Pass host info like this
 
     INSTAPUSHER_HOST=instapusher.com instapusher
 
@@ -40,6 +39,9 @@ Also there are other env variables like `INSTAPUSHER_PROJECT` and `INSTAPUSHER_B
 
     INSTAPUSHER_HOST=instapusher.com INSTAPUSHER_PROJECT=rails INSTAPUSHER_BRANCH=master instapusher
 
+ALSO you can pass your `api_key`
+
+    API_KEY=xxxx instapusher
 
 ## What problem it solves
 

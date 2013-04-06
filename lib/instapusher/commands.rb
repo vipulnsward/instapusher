@@ -17,7 +17,7 @@ module Instapusher
       branch_name  ||= ENV['INSTAPUSHER_BRANCH'] || git.current_branch
       project_name ||= ENV['INSTAPUSHER_PROJECT'] || git.project_name
 
-      api_key = Instapusher::Configuration.api_key || ""
+      api_key = ENV['API_KEY'] || Instapusher::Configuration.api_key || ""
       if api_key.to_s.length == 0
         puts "Please enter instapusher api_key at ~/.instapusher "
       end
