@@ -27,6 +27,10 @@ You can provide the env variable `LOCAL` like:
 
     LOCAL=1 instapusher
 
+To enable debug messages you can do 
+
+    DEBUG=1 instapusher
+
 And instapusher will send requests to `http://localhost:3000` server.
 Another solution is use env variable `INSTAPUSHER_HOST`.
 

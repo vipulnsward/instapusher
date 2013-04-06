@@ -8,6 +8,7 @@ module Instapusher
     DEFAULT_HOSTNAME = 'instapusher.com'
 
     def self.deploy(project_name=nil, branch_name=nil)
+      debug = ENV['DEBUG']
       hostname = ENV['INSTAPUSHER_HOST'] || DEFAULT_HOSTNAME
       hostname = "localhost:3000" if ENV['LOCAL']
 
@@ -26,6 +27,10 @@ module Instapusher
                   local:   ENV['LOCAL'],
                   api_key: api_key }
 
+      if debug
+        puts "url: #{url.inspect}"
+        puts "options: #{options.inspect}"
+      end
       response = Net::HTTP.post_form URI.parse(url), options
       response_body  = MultiJson.load(response.body)
       job_status_url = response_body['status'] || response_body['job_status_url']
