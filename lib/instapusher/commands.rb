@@ -33,6 +33,9 @@ module Instapusher
       end
       response = Net::HTTP.post_form URI.parse(url), options
       response_body  = MultiJson.load(response.body)
+
+      puts "response_body: #{response_body.inspect}" if debug
+
       job_status_url = response_body['status'] || response_body['job_status_url']
 
       if job_status_url && job_status_url != ""
