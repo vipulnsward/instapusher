@@ -71,7 +71,7 @@ application name under which it will be deployed to heroku will be
 So in this case the url of the application will be
 `http://nnimbleshop-76-facebook-ip.herokuapp.com` .
 
-There are two special branches `production` and `staging`.
+There are three special branches `master`, `staging` and `production`.
 For these branches the url generated will be just the application name and the
 branch name. For example if I execute `instapusher` from `staging`
 branch then the heroku url will be
