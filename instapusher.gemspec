@@ -16,6 +16,5 @@ Gem::Specification.new do |gem|
   gem.version       = Instapusher::VERSION
 
   gem.add_dependency("hashr", "~> 0.0.19")
-  gem.add_dependency("heroku", "~> 2.25.0")
   gem.add_dependency("multi_json")
 end
