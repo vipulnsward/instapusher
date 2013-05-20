@@ -28,6 +28,5 @@ end.parse!
 if options[:version]
   puts Instapusher::VERSION
 else
-  debugger
   Instapusher::Commands.deploy(options)
 end
