@@ -24,13 +24,15 @@ module Instapusher
 
       options = { project: project_name,
                   branch:  branch_name,
+                  quick:   ENV['QUICK'],
                   local:   ENV['LOCAL'],
                   api_key: api_key }
 
       if debug
-        puts "url: #{url.inspect}"
-        puts "options: #{options.inspect}"
+        puts "url to hit: #{url.inspect}"
+        puts "options being passed to the url: #{options.inspect}"
       end
+
       response = Net::HTTP.post_form URI.parse(url), options
       response_body  = MultiJson.load(response.body)
 
