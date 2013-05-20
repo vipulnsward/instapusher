@@ -28,5 +28,5 @@ end.parse!
 if options[:version]
   puts Instapusher::VERSION
 else
-  Instapusher::Commands.deploy(options)
+  Instapusher::Commands.new(options).deploy
 end
