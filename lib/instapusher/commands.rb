@@ -7,28 +7,31 @@ module Instapusher
   class Commands
     DEFAULT_HOSTNAME = 'instapusher.com'
 
-    def self.deploy(project_name=nil, branch_name=nil)
-      debug = ENV['DEBUG']
+    def self.deploy(_options)
+
+      debug = _options(:debug)
+
       hostname = ENV['INSTAPUSHER_HOST'] || DEFAULT_HOSTNAME
-      hostname = "localhost:3000" if ENV['LOCAL']
+      hostname = "localhost:3000" if _options[:local]
 
       url          = "http://#{hostname}/heroku.json"
       git          = Git.new
-      branch_name  ||= ENV['INSTAPUSHER_BRANCH'] || git.current_branch
-      project_name ||= ENV['INSTAPUSHER_PROJECT'] || git.project_name
+      branch_name  = _options[:project_name] || ENV['INSTAPUSHER_BRANCH'] || git.current_branch
+      project_name = _options[:branch_name] || ENV['INSTAPUSHER_PROJECT'] || git.project_name
 
       api_key = ENV['API_KEY'] || Instapusher::Configuration.api_key || ""
+
       if api_key.to_s.length == 0
         puts "Please enter instapusher api_key at ~/.instapusher "
       end
 
       options = { project: project_name,
                   branch:  branch_name,
-                  quick:   ENV['QUICK'],
-                  local:   ENV['LOCAL'],
+                  quick:   _options[:quick],
+                  local:   _options[:local],
                   api_key: api_key }
 
-      if debug
+      if debug || true
         puts "url to hit: #{url.inspect}"
         puts "options being passed to the url: #{options.inspect}"
       end

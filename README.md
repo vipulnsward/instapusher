@@ -25,11 +25,11 @@ Example:
 
 You can provide the env variable `LOCAL` like:
 
-    LOCAL=1 instapusher
+    instapusher --local
 
 To enable debug messages you can do 
 
-    DEBUG=1 instapusher
+    instapusher --debug
 
 Pass host info like this
 
