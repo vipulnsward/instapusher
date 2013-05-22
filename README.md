@@ -27,9 +27,15 @@ You can provide the env variable `LOCAL` like:
 
     instapusher --local
 
-To enable debug messages you can do 
+To enable debug messages do
 
     instapusher --debug
+
+Enable quick option as shown below. In the quick mode only code is
+pushed. No migration is done. No config environment is set. So it is
+much faster and it leaves the data intact.
+
+    instapusher --quick
 
 Pass host info like this
 
