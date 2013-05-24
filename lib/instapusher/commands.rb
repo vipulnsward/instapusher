@@ -1,8 +1,6 @@
+require_relative "../instapusher"
 require 'net/http'
 require 'uri'
-require 'multi_json'
-require 'instapusher'
-require 'active_support/all'
 
 module Instapusher
   class Commands

@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
-require_relative '../lib/instapusher/commands'
-require_relative '../lib/instapusher/version'
+require_relative '../lib/instapusher'
 
 require 'optparse'
 
