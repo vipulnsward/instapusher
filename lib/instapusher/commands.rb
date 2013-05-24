@@ -86,7 +86,7 @@ module Instapusher
 
       
       response = Net::HTTP.post_form URI.parse(url), options
-      response_body  = MultiJson.load(response.body)
+      response_body  = ::JSON.parse(response.body)
 
       puts "response_body: #{response_body.inspect}" if debug
 
