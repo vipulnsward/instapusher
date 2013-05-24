@@ -7,7 +7,7 @@ module Instapusher
     @_settings = {}
     attr_reader :_settings
 
-    def load(filename=nil)
+    def load(debug = false, filename=nil)
       filename ||= File.join(ENV['HOME'], '.instapusher')
 
       unless File.exist? filename
@@ -15,9 +15,14 @@ module Instapusher
       end
 
       @_settings = YAML::load_file(filename) || {}
+
+      if debug
+        puts @_settings.inspect
+      end
     end
 
     def method_missing(name, *args, &block)
+      self.load
       @_settings[name.to_s]
     end
   end

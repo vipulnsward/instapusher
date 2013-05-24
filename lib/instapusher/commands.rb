@@ -30,10 +30,12 @@ module Instapusher
     end
 
     def verify_api_key
-      @api_key = ENV['API_KEY'] || Instapusher::Configuration.api_key || ""
+      @api_key = ENV['API_KEY'] || Instapusher::Configuration.api_key(debug) || ""
 
       if @api_key.to_s.length == 0
-        puts "Please enter instapusher api_key at ~/.instapusher "
+        abort "Please enter instapusher api_key at ~/.instapusher "
+      elsif debug
+        puts "api_key is #{@api_key}"
       end
     end
 
@@ -55,15 +57,19 @@ module Instapusher
       
       input = STDIN.gets.chomp.downcase
 
-        if %w(yes y).include?(input)
-        elsif %w(no n).include?(input)
-          abort "Please try again when you have taken the backup"
-        else
-          abort "Please answer yes or no"
-        end
+      if %w(yes y).include?(input)
+        #do nothing
+      elsif %w(no n).include?(input)
+        abort "Please try again when you have taken the backup"
+      else
+        abort "Please answer yes or no"
+      end
+    end
+
+    def tag_release
+      return if branch_name.intern != :production
 
       version_number = Time.current.to_s.parameterize
-
 
       cmd = "git tag -a -m \"Version #{version_number}\" #{version_number}"
       puts cmd if debug
@@ -83,7 +89,6 @@ module Instapusher
         puts "options being passed to the url: #{options.inspect}"
         puts "connecting to #{url} to send data"
       end
-
       
       response = Net::HTTP.post_form URI.parse(url), options
       response_body  = ::JSON.parse(response.body)
@@ -97,6 +102,8 @@ module Instapusher
         puts 'Monitor the job status at: ' + job_status_url
         cmd = "open #{job_status_url}"
         `#{cmd}`
+
+        tag_release
       else
         puts response_body['error']
       end
