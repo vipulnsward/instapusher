@@ -17,4 +17,5 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency("hashr", "~> 0.0.19")
   gem.add_dependency("json")
+  gem.add_dependency("activesupport")
 end

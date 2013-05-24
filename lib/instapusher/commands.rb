@@ -2,6 +2,7 @@ require 'net/http'
 require 'uri'
 require 'multi_json'
 require 'instapusher'
+require 'active_support/all'
 
 module Instapusher
   class Commands
@@ -11,7 +12,6 @@ module Instapusher
     attr_reader :debug, :api_key, :branch_name, :project_name
 
     def initialize init_options = {}
-
       @debug = init_options[:debug]
       @quick = init_options[:quick]
       @local = init_options[:local]
@@ -50,14 +50,43 @@ module Instapusher
       end
     end
 
+    def special_instructions_for_production
+      question = "You are deploying to production. Did you take backup? If not then execute rake handy:heroku:backup_production and then come back. "
+      STDOUT.puts question
+      STDOUT.puts "Answer 'yes' or 'no' "
+      
+      input = STDIN.gets.chomp.downcase
+
+        if %w(yes y).include?(input)
+        elsif %w(no n).include?(input)
+          abort "Please try again when you have taken the backup"
+        else
+          abort "Please answer yes or no"
+        end
+
+      version_number = Time.current.to_s.parameterize
+
+
+      cmd = "git tag -a -m \"Version #{version_number}\" #{version_number}"
+      puts cmd if debug
+      system cmd
+
+      cmd =  "git push --tags"
+      puts cmd if debug
+      system cmd
+    end
+
     def deploy
       verify_api_key
+      special_instructions_for_production if branch_name.intern == :production
 
       if debug
         puts "url to hit: #{url.inspect}"
         puts "options being passed to the url: #{options.inspect}"
+        puts "connecting to #{url} to send data"
       end
 
+      
       response = Net::HTTP.post_form URI.parse(url), options
       response_body  = MultiJson.load(response.body)
 

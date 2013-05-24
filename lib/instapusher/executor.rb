@@ -6,6 +6,7 @@ module Instapusher
     delegate :job,              to: :base
 
     def initialize base
+      raise 'boom'
       @base = base
     end
 

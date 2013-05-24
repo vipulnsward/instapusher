@@ -3,6 +3,7 @@ require 'yaml'
 module Instapusher
   module Configuration
     extend self
+      raise 'boom'
 
     @_settings = {}
     attr_reader :_settings
