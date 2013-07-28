@@ -70,8 +70,9 @@ module Instapusher
       return if branch_name.intern != :production
 
       version_number = Time.current.to_s.parameterize
+      tag_name = "#{branch_name}-#{version_number}"
 
-      cmd = "git tag -a -m \"Version #{version_number}\" #{version_number}"
+      cmd = "git tag -a -m \"Version #{tag_name}\" #{tag_name}"
       puts cmd if debug
       system cmd
 
