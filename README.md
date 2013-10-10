@@ -14,11 +14,12 @@ Makes it easy to push to heroku.
 
 ## Usage
 
-If you want to deploy to master branch or any branch first go to that branch and then do
+In order to deploy your code first make sure that you are in the branch that you want to deploy. 
+Then execute this command.
 
     instapusher
 
-It detects a project name and a branch from the git repo.
+It detects project name and a branch from the git repo and starts deploying your project.
 
 
 ## Setup Instapusher server
