@@ -6,20 +6,20 @@ Makes it easy to push to heroku.
 
     gem install instapusher
 
+## Login at instapusher.com
+
+* Next login at instapusher.com .
+* visit http://instapusher.com/my/api_key and click on the link that says ".instapusher". Save this file at ~.
+
+
 ## Usage
+
+If you want to deploy to master branch or any branch first go to that branch and then do
 
     instapusher
 
-It detects a project name and a branch from the git repo. Else you can specify it from the command line like:
+It detects a project name and a branch from the git repo.
 
-    instapusher rails master
-
-
-After installing the gem you should register in the `http://instapusher.com`.
-Setup a project using the user and project name from the github. And create a config file `.instapusher` with api key.
-Example:
-
-    api_key: 123123123
 
 ## Setup Instapusher server
 
