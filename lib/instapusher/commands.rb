@@ -5,8 +5,6 @@ require 'uri'
 module Instapusher
   class Commands
 
-    DEFAULT_HOSTNAME = 'instapusher.com'
-
     attr_reader :debug, :api_key, :branch_name, :project_name
 
     def initialize init_options = {}
@@ -39,75 +37,24 @@ module Instapusher
       end
     end
 
-    def url
-      @url ||= begin
-          hostname =  if options[:local]
-                        "localhost:3000" 
-                      else
-                        ENV['INSTAPUSHER_HOST'] || DEFAULT_HOSTNAME
-                      end
-          "http://#{hostname}/heroku.json"
-      end
-    end
-
-    def special_instructions_for_production
-      question = "You are deploying to production. Did you take backup? If not then execute rake handy:heroku:backup_production and then come back. "
-      STDOUT.puts question
-      STDOUT.puts "Answer 'yes' or 'no' "
-      
-      input = STDIN.gets.chomp.downcase
-
-      if %w(yes y).include?(input)
-        #do nothing
-      elsif %w(no n).include?(input)
-        abort "Please try again when you have taken the backup"
-      else
-        abort "Please answer yes or no"
-      end
-    end
-
-    def tag_release
-      return if branch_name.intern != :production
-
-      version_number = Time.current.to_s.parameterize
-      tag_name = "#{branch_name}-#{version_number}"
-
-      cmd = "git tag -a -m \"Version #{tag_name}\" #{tag_name}"
-      puts cmd if debug
-      system cmd
-
-      cmd =  "git push --tags"
-      puts cmd if debug
-      system cmd
-    end
-
     def deploy
       verify_api_key
-      special_instructions_for_production if branch_name.intern == :production
+      SpecialInstructionForProduction.new.run if production?
 
-      if debug
-        puts "url to hit: #{url.inspect}"
-        puts "options being passed to the url: #{options.inspect}"
-        puts "connecting to #{url} to send data"
-      end
-      
-      response = Net::HTTP.post_form URI.parse(url), options
-      response_body  = ::JSON.parse(response.body)
+      submission = JobSubmission.new(debug, options)
+      submission.submit_the_job
 
-      puts "response_body: #{response_body.inspect}" if debug
-
-      job_status_url = response_body['status'] || response_body['job_status_url']
-
-      if job_status_url && job_status_url != ""
-        puts 'The appliction will be deployed to: ' + response_body['heroku_url']
-        puts 'Monitor the job status at: ' + job_status_url
-        cmd = "open #{job_status_url}"
-        `#{cmd}`
-
-        tag_release
+      if submission.success?
+        submission.feedback_to_user
+        TagTheRelease.new(branch_name, debug).tagit if production?
       else
-        puts response_body['error']
+        puts submission.error_message
       end
     end
+
+    def production?
+      branch_name.intern != :production
+    end
+
   end
 end

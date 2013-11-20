@@ -7,6 +7,8 @@ module Instapusher
     attr_reader :callbacks, :project_name, :heroku_app_name, :git, :config, :config_file
 
     def initialize(job_id, config_path, callbacks)
+      raise 'boom'
+
       @job = ::Job.find_by_id! job_id
       @callbacks = callbacks
 

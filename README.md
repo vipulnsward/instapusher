@@ -6,11 +6,10 @@ Makes it easy to push to heroku.
 
     gem install instapusher
 
-## Login at instapusher.com
+## Setting up account
 
-* Next login at instapusher.com .
+* Login at instapusher.com .
 * visit http://instapusher.com/my/api_key and click on the link that says ".instapusher". Save this file at ~.
-
 
 ## Usage
 
